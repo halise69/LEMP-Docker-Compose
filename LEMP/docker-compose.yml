@@ -6,6 +6,7 @@ networks:
 services:
     nginx:
         image: nginx:alpine
+        # container_name: LEMP_nginx
         ports:
             - "80:80"
         volumes:
@@ -22,12 +23,13 @@ services:
 
     mariaDB:
         image: mariadb:latest
+        # container_name: LEMP_mariaDB
         volumes:
             - ./database:/var/lib/mysql:rw
         depends_on:
             - nginx
         environment:
-            - MYSQL_ROOT_PASSWORD=654321          
+            - MYSQL_ROOT_PASSWORD=h4lis_S3rver_N4d0yo          
         networks:
             - LEMP
         restart: unless-stopped
@@ -37,8 +39,9 @@ services:
 
     php:
         build: .
+        # container_name: LEMP_php
         volumes:
-            - ./code:/code       
+            - ./code:/code 
         networks:
             - LEMP
         restart: unless-stopped
@@ -48,9 +51,11 @@ services:
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
+        # container_name: LEMP_phpMyAdmin
         ports:
             - "9191:80"
         environment:        
+            # PMA_ARBITRARY: 1
             PMA_HOST: mariaDB
             PMA_PORT: 3306
         depends_on:
