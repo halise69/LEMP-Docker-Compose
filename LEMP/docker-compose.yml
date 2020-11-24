@@ -1,0 +1,66 @@
+version: '2.2'
+
+networks:
+    LEMP:
+
+services:
+    nginx:
+        image: nginx:alpine
+        ports:
+            - "80:80"
+        volumes:
+            - ./code:/code
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+        networks:
+            - LEMP
+        restart: unless-stopped
+        cpus: 1
+        mem_limit: 100M
+        memswap_limit: 100M
+
+    mariaDB:
+        image: mariadb:latest
+        volumes:
+            - ./database:/var/lib/mysql:rw
+        depends_on:
+            - nginx
+        environment:
+            - MYSQL_ROOT_PASSWORD=654321          
+        networks:
+            - LEMP
+        restart: unless-stopped
+        cpus: 1
+        mem_limit: 200M
+        memswap_limit: 200M
+
+    php:
+        build: .
+        volumes:
+            - ./code:/code       
+        networks:
+            - LEMP
+        restart: unless-stopped
+        cpus: 1
+        mem_limit: 100M
+        memswap_limit: 100M
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "9191:80"
+        environment:        
+            PMA_HOST: mariaDB
+            PMA_PORT: 3306
+        depends_on:
+            - mariaDB
+        networks:
+            - LEMP
+        restart: unless-stopped
+        cpus: 1
+        mem_limit: 100M
+        memswap_limit: 100M    
+
+
+
