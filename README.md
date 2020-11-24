@@ -1,6 +1,6 @@
 # LEMP Docker Compose
 
-Linux Nginx Mysql Php & phpmyadmin
+Linux nginx mysql php & phpmyadmin
 
 ## Installation
 
