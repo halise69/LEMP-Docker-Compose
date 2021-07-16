@@ -6,7 +6,7 @@ Linux nginx mysql php & phpmyadmin
 
 
 ```bash
-git clone https://github.com/halise69/LEMP-Docker-Compose.git
+git clone https://github.com/nadoyo69/LEMP-Docker-Compose.git
 ```
 
 ## Start Docker
